@@ -1,0 +1,39 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+int subarraysDivByK(vector<int>& nums, int k) 
+    {
+        unordered_map<int,int>m;
+        m[0] = 1;
+
+        int count = 0;
+        int sum = 0;
+        for(int i=0;i<nums.size();i++)
+        {
+            sum += nums[i];
+            int x = sum%k;
+            if(x < 0){ x += k; }
+
+            if(m.find(x) != m.end())
+            {   count += m[x]; m[x]++; }
+            else
+            {   m[x]++; }
+        }    
+
+        return count;
+    }
+
+int main()
+{
+    int n,k;
+    cin>>n>>k;
+    int arr[n];
+    for(int i=0;i<n;i++){ cin>>arr[i]; }
+
+    int ans = subarraysDivByK(arr,k);
+    cout<<ans;
+    return 0;
+}
+
+
+    
