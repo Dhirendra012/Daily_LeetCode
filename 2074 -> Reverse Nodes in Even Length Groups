@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+
+    class ListNode
+    {
+        public:
+            int val;
+            ListNode *next;
+
+            ListNode(int data)
+            {
+                this->val = data;
+                this->next = NULL;
+            }
+    };
+
+    void Print(ListNode* head)
+    {
+        while(head)
+        {
+            cout<<head->val<<" ";
+        }   
+        cout<<endl;
+    }
+
+    ListNode* reverse(ListNode* head)
+    {
+        ListNode* curr = head;
+        ListNode* prev = NULL;
+        ListNode* next = NULL;
+
+        while(curr)
+        {
+            next = curr -> next;
+            curr -> next = prev;
+            prev = curr;
+            curr = next;
+        }
+
+        return prev;
+    }
+
+    ListNode* reverseEvenLengthGroups(ListNode* head) 
+    {
+        if(head == NULL || head -> next == NULL){ return head; }
+
+        ListNode* curr = head;
+        ListNode* curr2 = curr;
+        ListNode* curr1 = curr2;
+        int i = 1;
+
+        while(curr)
+        {
+            int count = 0;
+            curr1 = curr2;
+            curr2 = curr;
+            while(curr && count < i){ curr2 = curr; curr = curr -> next;  count++; }
+
+            if((count==i && i%2 == 0) || (count!=i && count%2 == 0))
+            {
+                curr2 -> next = NULL;
+                curr1 -> next = reverse(curr1->next);
+                while(curr1 -> next){ curr1 =  curr1 -> next; }
+                curr1 -> next = curr;
+                curr2 = curr1;
+            }
+
+            i++; 
+        }
+
+        return head;
+    }
+
+    int main()
+    {
+
+        int n; cin>>n;
+        ListNode* head = new ListNode(0);
+        ListNode* head1 = head;
+        while(n--)
+        {
+            int x; cin>>x;
+            ListNode* curr = new ListNode(x);
+            head1 -> next = curr;
+            head1 = curr;
+        }
+
+        cout<<"Current LL is ->  "; Print(head->next);
+        head -> next = reverseEvenLengthGroups(head->next);
+        cout<<"After reversal LL is -> "; Print(head->next);
+        return 0;
+    }
