@@ -1,0 +1,66 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+struct Node 
+{
+    string val;
+    Node* prev;
+    Node* next;
+
+    Node(string data)
+    {
+        this->val = data;
+        this->next = NULL;
+        this->prev = NULL;
+    }
+};
+
+class BrowserHistory {
+public:
+    Node* head = new Node("start");
+
+    BrowserHistory(string homepage) 
+    {
+        Node* curr = new Node(homepage);
+        curr -> prev = head;
+        head -> next = curr;
+        head = curr;
+    }
+    
+    void visit(string url) 
+    {
+        Node* curr = new Node(url);
+        curr -> prev = head;
+        head -> next = curr;
+        head = curr;  
+    }
+    
+    string back(int steps) 
+    {
+        while(steps-- && head -> prev -> prev){ head = head -> prev; }
+        return head -> val;
+    }
+    
+    string forward(int steps) 
+    {
+        while(steps-- && head -> next){ head = head -> next; }
+        return head -> val;
+    }
+};
+
+int main()
+{
+    BrowserHistory Start("LeetCode.com");
+    
+    Start.visit("google.com");
+    Start.visit("facebook.com");
+    Start.visit("youtube.com");
+    cout<<Start.back(1)<<endl;
+    cout<<Start.back(1)<<endl;
+    cout<<Start.forward(1)<<endl;
+    Start.visit("linkedin.com");
+    cout<<Start.forward(2)<<endl;
+    cout<<Start.back(2)<<endl;
+    cout<<Start.back(7)<<endl;
+    return 0;
+}
