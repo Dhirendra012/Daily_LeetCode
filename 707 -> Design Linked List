@@ -1,0 +1,106 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node
+{
+    public :
+    int val;
+    Node* next;
+    Node(int data)
+    {
+        this->val = data;
+        this->next = NULL;
+    }
+};
+
+class MyLinkedList {
+    public:
+    Node* head = NULL;
+    int count = 0;
+
+    int get(int index) 
+    {
+        if(index+1 > count){ return -1; }
+        Node* curr = head;
+        while(index-- && curr){ curr = curr -> next; }
+        if(curr){ return curr->val; }
+        return -1;    
+    }
+    
+    void addAtHead(int val) 
+    {
+        count++;
+        if(head == NULL){ Node* curr = new Node(val); head = curr; }
+        else
+        {
+            Node* curr = new Node(val);
+            curr -> next = head;
+            head = curr;
+        }   
+    }
+    
+    void addAtTail(int val) 
+    {
+        count++;
+        if(head == NULL){ Node* curr = new Node(val); head = curr; }
+        else
+        {
+            Node* curr = new Node(val);
+            Node* curr1 = head;
+            while(curr1 -> next){ curr1 = curr1 -> next; }
+            curr1 -> next = curr;
+        }  
+    }
+    
+    void addAtIndex(int index, int val) 
+    {
+        if(index > count){ return; }
+
+        count++;
+        if(index == 0)
+        { Node* curr = new Node(val); curr -> next = head; head = curr; return; }
+
+        Node* curr = head;
+        index--;
+        while(index-- && curr){ curr = curr -> next; }
+
+        if(curr)
+        {
+            Node* curr1 = new Node(val);
+            curr1 -> next = curr -> next;
+            curr -> next = curr1; 
+        }
+    }
+    
+    void deleteAtIndex(int index) 
+    {   
+        if(index+1 > count){ return; }
+
+        count--;
+        if(index == 0){ head = head -> next; return; }
+
+        Node* curr = head;
+        index--;
+        while(index-- && curr){ curr = curr -> next; }
+
+        if(curr)
+        {
+            curr -> next = curr -> next -> next;
+        }
+    }
+};
+
+int main()
+{
+    MyLinkedList str;
+    str.addAtHead(5);
+    str.addAtTail(6);
+    str.addAtHead(7);
+    str.addAtTail(8);
+    str.addAtIndex(2,9);
+    str.deleteAtIndex(2);
+    cout<<str.get(0)<<endl;
+    cout<<str.get(1)<<endl;
+    cout<<str.get(2)<<endl;
+    return 0;
+}
