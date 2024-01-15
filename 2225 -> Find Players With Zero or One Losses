@@ -1,0 +1,46 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    vector<vector<int>> findWinners(vector<vector<int>>& nums) 
+    {
+        vector<vector<int>>ans;
+        vector<int>win;
+        vector<int>los;
+
+        unordered_map<int,int>m;
+        unordered_set<int>n;
+
+        for(int i=0;i<nums.size();i++){ m[nums[i][1]]++; n.insert(nums[i][0]); }
+        for(auto i:m){ if(i.second == 1){ los.push_back(i.first); } }
+        for(auto i:n){ if(m.find(i) == m.end()){ win.push_back(i); } }
+
+        sort(win.begin(),win.end());
+        sort(los.begin(),los.end());
+        ans.push_back(win);
+        ans.push_back(los);
+        return ans;
+    }
+
+    int main()
+    {
+        int n;
+        cout<<"Enter the number of matches played"<<endl;
+        cin>>n;
+
+        vector<vector<int>>nums;
+        for(int i=0;i<n;i++)
+        {
+            vector<int>x;
+            for(int j=0;j<2;j++){ int a; cin>>a; x.push_back(a); }
+            nums.push_back(x);
+        }
+
+        vector<vector<int>>ans = findWinners(nums);
+        for(int i=0;i<2;i++)
+        {
+            for(int j=0;j<ans[0].size();j++){ cout<<ans[i][j]<<" "; }
+            cout<<endl;
+        }
+
+        return 0;
+     }
