@@ -1,0 +1,73 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+    class ListNode
+    {
+        public:
+            int val;
+            ListNode *next;
+
+            ListNode(int data)
+            {
+                this->val = data;
+                this->next = NULL;
+            }
+    };
+
+    void Print(ListNode* head)
+    {
+        while(head)
+        {
+            cout<<head->val<<" "; head = head -> next;
+        }   
+        cout<<endl;
+    }
+
+    vector<int> nodesBetweenCriticalPoints(ListNode* head) 
+    {
+        vector<int>ans;
+        ListNode* str = head;
+        head = head -> next;
+  
+        int i = 1;
+
+        while(head -> next)
+        {
+            if(head->val > str->val && head->val > head->next->val)
+            { ans.push_back(i); }
+            else if(head->val < str->val && head->val < head->next->val)
+            { ans.push_back(i); }
+
+            str = head; i++;
+            head = head -> next;
+        }
+
+        if(ans.size() == 0 || ans.size() == 1){ return {-1,-1}; }
+
+        int a = INT_MAX;
+        int b = ans[ans.size()-1]-ans[0];
+        for(int i=1;i<ans.size();i++){ a = min(a,ans[i]-ans[i-1]); }
+
+        return {a,b};
+    }
+
+    int main()
+    {
+
+        int n; cin>>n;
+        ListNode* head = new ListNode(0);
+        ListNode* head1 = head;
+        while(n--)
+        {
+            int x; cin>>x;
+            ListNode* curr = new ListNode(x);
+            head1 -> next = curr;
+            head1 = curr;
+        }
+
+        cout<<"Current LL is ->  "; Print(head->next);
+        vector<int>ans = nodesBetweenCriticalPoints(head->next);
+        cout<<"Minimum ans Maximum no of Node Between two Critical Points : "<<endl;
+        cout<<ans[0]<<" "<<ans[1];
+        return 0;
+    }
