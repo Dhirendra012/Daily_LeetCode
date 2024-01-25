@@ -1,0 +1,84 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    bool isPossible(int i,int j,vector<vector<bool>>& visited,vector<vector<char>>& grid)
+    {
+        int row = grid.size();
+        int col = grid[0].size();
+
+        if((i < row && i >= 0) && (j < col && j >= 0) && grid[i][j] == 'O' && visited[i][j] == false)
+        { return true; }
+
+        return false;
+    }
+
+    void area(int i,int j,vector<vector<bool>>& visited,vector<vector<char>>& grid)
+    {
+        if(isPossible(i,j,visited,grid) == false){ return; }
+
+        visited[i][j] = true;
+
+        area(i+1,j,visited,grid);
+        area(i-1,j,visited,grid);
+        area(i,j+1,visited,grid);
+        area(i,j-1,visited,grid);
+    }
+
+    void solve(vector<vector<char>>& nums) 
+    {
+        int row = nums.size();
+        int col = nums[0].size();
+        vector<vector<bool>>grid(row, vector<bool>(col,false)); 
+
+        for(int i=0;i<row;i++)
+        {   
+            if(nums[i][0] == 'O') { area(i,0,grid,nums); }
+            if(nums[i][col-1] == 'O') { area(i,col-1,grid,nums); }
+        }
+
+        for(int i=0;i<col;i++)
+        {   
+            if(nums[0][i] == 'O') { area(0,i,grid,nums); }
+            if(nums[row-1][i] == 'O') { area(row-1,i,grid,nums); }
+        }
+
+        for(int i=0;i<row;i++)
+        {
+            for(int j=0;j<col;j++)
+            { (grid[i][j] == true) ? nums[i][j] = 'O' : nums[i][j] = 'X'; }
+        }
+    }
+
+    void Print(vector<vector<char>>& grid)
+    {
+        for(int i=0;i<grid.size();i++){
+            for(int j=0;j<grid[0].size();j++){ cout<<grid[i][j]<<" "; } 
+            cout<<endl; }
+    }
+
+    int main()
+    {
+        int row; 
+        cout<<"Enter No of Rows : "<<endl;
+        cin>>row;
+        int col; 
+        cout<<"Enter No of Colms : "<<endl;
+        cin>>col;
+
+        vector<vector<char>>grid;
+        cout<<"Enter Elements of Grid : "<<endl;
+        for(int i=0;i<row;i++)
+        {
+            vector<char>x;
+            for(int j=0;j<col;j++)
+            {  char y; cin>>y; x.push_back(y); }
+            grid.push_back(x);
+        }
+
+        cout<<"Initial Grid : "<<endl; 
+        Print(grid);
+        solve(grid);
+        cout<<"After Removing Surrounded Regions Grid : "<<endl; 
+        Print(grid);
+        return 0;
+    }
