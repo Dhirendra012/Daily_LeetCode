@@ -1,0 +1,40 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    int minimumRecolors(string blocks, int k) 
+    {
+        int ans = INT_MAX;
+        int W = 0;
+        
+        for(int i=0;i<blocks.size();i++)
+        {
+            (i == k) ? ans = min(ans,W) : ans;
+
+            if(i < k)
+            {   (blocks[i]=='W') ? W++ : W; }
+            else
+            {
+                (blocks[i]=='W') ? W++ : W;
+                (blocks[i-k]=='W') ? W-- : W;
+                ans = min(ans,W);
+            }
+        }
+
+        ans = min(ans,W);
+
+        return ans;
+    }
+    
+    int main()
+    {
+        string str;
+        cout<<"Enter the String : ";
+        cin>>str;
+        int k;
+        cout<<"Enter the value of K : ";
+        cin>>k;
+        
+        int ans = minimumRecolors(str,k);
+        cout<<ans;
+        return 0;
+    }
