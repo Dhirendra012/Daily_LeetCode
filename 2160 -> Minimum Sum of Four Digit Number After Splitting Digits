@@ -1,0 +1,24 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    int minimumSum(int num) 
+    {   
+        vector<int>arr(4,0);
+        for(int i=0;i<4;i++)
+        { arr[i] = num%10; num/=10; }
+        sort(arr.begin(),arr.end());
+
+        int a = arr[0]*10+arr[3];
+        int b = arr[1]*10+arr[2];
+
+        return a+b;
+    }
+
+    int main()
+    {
+        int x;
+        cout<<"Enter the Number : ";
+        cin>>x;
+        cout<<minimumSum(x)<<endl;
+        return 0;
+    }
