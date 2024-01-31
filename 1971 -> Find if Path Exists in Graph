@@ -1,0 +1,70 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+    
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) 
+    {
+        if(source == destination){ return true; }
+
+        unordered_map<int,vector<int>>adj;
+        for(int i=0;i<edges.size();i++)
+        {
+            adj[edges[i][0]].push_back(edges[i][1]);
+            adj[edges[i][1]].push_back(edges[i][0]);
+        }
+
+        unordered_map<int,bool>visited;
+        queue<int>q;
+        q.push(source);
+        visited[source] = true;
+
+        while(!q.empty())
+        {
+            int x = q.front();
+            q.pop();
+
+            for(auto i : adj[x])
+            {
+                if(i == destination){ return true; }
+
+                if(!visited[i])
+                {
+                    q.push(i);
+                    visited[i] = true;
+                }
+            }
+        }
+
+        return false;
+    }
+    
+    int main()
+    {
+        int N; 
+        cout<<"Enter No of Edges : "; 
+        cin>>N;
+        
+        int source;
+        cout<<"Enter starting point : "; 
+        cin>>source;
+        
+        int destination;
+        cout<<"Enter ending point : "; 
+        cin>>destination;
+        
+        vector<vector<int>>edges;
+        cout<<"Enter edges : "<<endl; 
+        for(int i=0;i<N;i++)
+        {
+            vector<int>x;
+            for(int j=0;j<2;j++)
+            { int a; cin>>a; x.push_back(a); }
+            edges.push_back(x);
+        }
+        
+        if(validPath(N,edges,source,destination))
+        { cout<<"Path Exist"; }
+        else
+        { cout<<"Path does not Exist"; }
+        
+        return 0;
+    }
