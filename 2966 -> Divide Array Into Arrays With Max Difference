@@ -1,0 +1,54 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    vector<vector<int>> divideArray(vector<int>& nums, int k) 
+    {
+        sort(nums.begin(),nums.end());
+        vector<vector<int>>ans;
+        for(int i=0;i<nums.size();)
+        {
+            if(nums[i+2]-nums[i] > k){ return {}; }
+            else
+            {
+                vector<int>x;
+                x.push_back(nums[i]);        
+                x.push_back(nums[i+1]);    
+                x.push_back(nums[i+2]);    
+                ans.push_back(x);
+            }
+            i += 3;
+        }    
+
+        return ans;
+    }
+    
+    void Print(vector<vector<int>>ans)
+    {
+        for(int i=0;i<ans.size();i++)
+        {
+            for(int j=0;j<ans[0].size();j++)
+            { cout<<ans[i][j]<<" "; }
+            cout<<endl;
+        }
+    }
+    
+    int main()
+    {
+        int n;
+        cout<<"Enter Length of Array : ";
+        cin>>n;
+        
+        int k;
+        cout<<"Enter max diff between any two element : ";
+        cin>>k;
+        
+        vector<int>arr;
+        cout<<"Enter element of Array : ";
+        for(int i=0;i<n;i++)
+        { int x; cin>>x; arr.push_back(x); }
+        
+        vector<vector<int>>ans = divideArray(arr,k);
+        if(ans.size() == 0){ cout<<"Can't Split Array"; }
+        else{ Print(ans); }
+        
+    }
