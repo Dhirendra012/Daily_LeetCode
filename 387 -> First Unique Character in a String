@@ -1,0 +1,32 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    int firstUniqChar(string s) 
+    {
+        unordered_map<char,int>mp;
+        for(int i=0;i<s.size();i++)
+        {
+            mp[s[i]]++;
+        }    
+
+        int ans;
+        for(int i=0;i<s.size();i++)
+        {
+            if(mp[s[i]] < 2)
+            {  ans = i;  break;  }
+            else
+            {  ans = -1;  }
+        }
+
+        return ans;
+    }
+    
+    int main()
+    {
+        string str;
+        cout<<"Enter the string : ";
+        cin>>str;
+        
+        cout<<firstUniqChar(str);
+        return 0;
+    }
