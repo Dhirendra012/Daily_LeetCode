@@ -1,0 +1,44 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+    
+    bool checkInclusion(string p, string s) 
+    {
+        if(p.size() > s.size()){ return false; }
+
+        int arr[26] = {0};
+        int n = p.size();
+
+        for(int i=0;i<n;i++)
+        {  arr[p[i]-'0'-49]++; arr[s[i]-'0'-49]--; }
+        
+        for(int i=n;i<=s.size();i++)
+        {
+            bool yes = true;
+            for(int j=0;j<26;j++)
+            { if(arr[j] != 0){ yes = false; break; } }
+            
+            if(yes == true){ return true; }
+            if(i == s.size()){ break; }
+
+            arr[s[i]-'0'-49]--;
+            arr[s[i-n]-'0'-49]++;
+        }
+
+        return false;
+    }
+    
+    int main()
+    {
+        string s;
+        cout<<"Enter Main String : ";
+        cin>>s;
+        
+        string p;
+        cout<<"Enter the string to search : ";
+        cin>>p;
+    
+        bool ans = checkInclusion(p,s);
+        cout<<"Permutation of string "<<p<<" present : "<<ans;
+        
+        return 0;
+    }
