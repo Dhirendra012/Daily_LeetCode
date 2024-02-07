@@ -1,0 +1,42 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    string frequencySort(string &s) 
+    {
+        map<char,int>mp;
+        for(int i=0;i<s.size();i++)
+        {  mp[s[i]]++;  }
+        
+        vector<pair<int,char>>m;
+        for(auto i : mp)
+        {
+            pair<int,char>p;
+            p.first = i.second;
+            p.second = i.first;
+            m.push_back(p);
+        }
+
+        sort(m.begin(),m.end());
+        string str = "";
+        for(int i=m.size()-1;i>=0;i--)
+        {
+            string x = "";
+            char c = m[i].second;
+            int size = m[i].first;
+            while(size--){  x += c; }
+            str += x;
+        }
+
+        return str;    
+    }
+    
+    int main()
+    {
+        string str;
+        cout<<"Enter the string : ";
+        cin>>str;
+        
+        cout<<"Sorted String by frequency of char : ";
+        cout<<frequencySort(str);
+        return 0;
+    }
