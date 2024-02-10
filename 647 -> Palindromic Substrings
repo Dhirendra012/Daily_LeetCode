@@ -1,0 +1,35 @@
+    #include<bits/stdc++.h>
+    using namespace std;
+
+    int countSubstrings(string s) 
+    {
+        int count = 1;
+        for(int i=1;i<s.size();i++)
+        {
+            count++;
+            int j = i-1;
+            int k = i+1;
+            while(j >= 0 && k < s.size() && s[j] == s[k]){ count++; j--; k++; }
+
+            if(s[i] == s[i-1])
+            {
+                count++;
+                int j = i-2;
+                int k = i+1;
+                while(j >= 0 && k < s.size() && s[j] == s[k]){ count++; j--; k++; }
+            }
+        }    
+
+        return count;
+    }
+
+    int main()
+    {
+        string str;
+        cout<<"Enter the String : ";
+        cin>>str;
+
+        cout<<"The number of palindromic substrings in it : "<<endl;
+        cout<<countSubstrings(str);
+        return 0;
+    }
